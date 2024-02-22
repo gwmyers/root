@@ -308,6 +308,7 @@ class NumEntriesTest(unittest.TestCase):
         f.Close()
         os.remove(filename)
 
+
 class InternalDataFrameTests(unittest.TestCase):
     """The HeadNode stores an internal RDataFrame for certain information"""
 
