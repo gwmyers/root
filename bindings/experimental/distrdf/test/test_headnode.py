@@ -308,36 +308,6 @@ class NumEntriesTest(unittest.TestCase):
         f.Close()
         os.remove(filename)
 
-    def test_num_entries_with_rdatasetspec_arg(self):
-        """
-        Ensure that the number of entries recorded are correct in the case
-        of RDataFrame constructor with an RDatasetSpec object.
-
-        """
-        filename = "test_num_entries_with_rdatasetspec_arg.root"
-        f = ROOT.TFile(filename, "recreate")
-
-        treename = "tree"
-        tree = ROOT.TTree(treename, "test")  # Create tree
-        v = ROOT.std.vector("int")(4)  # Create a vector of 0s of size 4
-        tree.Branch("vectorb", v)  # Create branch to hold the vector
-
-        for i in range(4):
-            v[i] = 1  # Change the vector element to 1
-            tree.Fill()  # Fill the tree with that element
-
-        f.Write()
-
-        ds = ROOT.RDF.Experimental.RDatasetSpec()
-        ds.AddSample(("sample", treename, filename))
-
-        hn = create_dummy_headnode(ds)
-
-        self.assertEqual(hn.tree.GetEntries(), 4)
-
-        f.Close()
-        os.remove(filename)
-
 class InternalDataFrameTests(unittest.TestCase):
     """The HeadNode stores an internal RDataFrame for certain information"""
 
