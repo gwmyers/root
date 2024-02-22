@@ -331,7 +331,7 @@ class NumEntriesTest(unittest.TestCase):
         ds = ROOT.RDF.Experimental.RDatasetSpec()
         ds.AddSample(("sample", treename, filename))
 
-        hn = create_dummy_headnode(tree)
+        hn = create_dummy_headnode(ds)
 
         self.assertEqual(hn.tree.GetEntries(), 4)
 
