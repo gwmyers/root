@@ -594,14 +594,23 @@ class RDatasetSpecHeadNode(HeadNode):
     """
     The head node of a computation graph where the RDataFrame data source is
     an RDatasetSpec object. This head node is responsible for the following
-    RDataFrame constructors::
-        RDataFrame (ROOT::RDF::Experimental::RDatasetSpec spec)
+    RDataFrame constructors:
+        RDataFrame(ROOT.RDF.Experimental.RDatasetSpec spec)
 
     Attributes:
         npartitions (int): The number of partitions the dataset will be split in
             for distributed execution.
 
-        rdatasetspec ():
+        rdatasetspec (ROOT.RDF.Experimental.RDatasetSpec): rdataset spec object
+            used to construct the RDataFrame
+
+        subtreenames (list[str]): List of tree names in the dataset.
+        
+        inputfiles (list[str]): List of file names where the dataset is stored.
+
+        friendinfo (ROOT.Internal.TreeUtils.RFriendInfo, None): Optional
+            information about friend trees of the dataset. Retrieved from 
+            RDatasetSpec.GetFriendInfo(). Defaults to None.
     """
 
     def __init__(self, backend: BaseBackend, npartitions: Optional[int], localdf: ROOT.RDataFrame, *args):
@@ -616,7 +625,6 @@ class RDatasetSpecHeadNode(HeadNode):
         """
         super().__init__(backend, npartitions, localdf)
 
-        self.defaultbranches = None
         # Information about friend trees, if they are present.
         self.friendinfo: Optional[ROOT.Internal.TreeUtils.RFriendInfo] = None
 
